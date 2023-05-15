@@ -16,35 +16,7 @@ def loadBoard():
     return None, False
 
 
-def playerTurn(board):
-    Col = input(YELLOW + 'Choose a Column between 1 and 7: ' + WHITE)
-    if not(Col.isdigit()):
-        print(MAGENTA + "Input must be integer!" + WHITE)
-        return playerTurn(board)
 
-    playerMove = int(Col) - 1
-
-    if playerMove < 0 or playerMove > 6:
-        print(MAGENTA + "Column must be between 1 and 7!" + WHITE)
-        return playerTurn(board)
-
-    if not(isColumnValid(board, playerMove)):
-        print(MAGENTA + "The Column you select is full!" + WHITE)
-        return playerTurn(board)
-
-
-    board = makeMove(board, playerMove, HUMAN_PLAYER)[0]
-    playerFourInRow  = findFours(board)
-    return board, playerFourInRow
-
-def playerWins(board):
-    printBoard(board)
-    print('                    '+BLUE+"HUMAN WINS !!\n" +WHITE)
-    playagain = True if input(YELLOW +'DO YOU WANT TO PLAY AGAIN(y/n)?'+WHITE).lower() == 'y' else False
-    #saveBoard(board)
-    if playagain:
-        mainFucntion()
-    return 0
 
 def aiTurn(board,depth):
     aiMove  = MiniMaxAlphaBeta(board, depth, AI_PLAYER)
@@ -55,13 +27,27 @@ def aiTurn(board,depth):
 
 def aiWins(board):
     printBoard(board)
-    print('                     '+RED+"AI WINS !!!!\n" +'\033[1;37;40m')
+    print('                     '+RED+"AI 1 WINS !!!!\n" +'\033[1;37;40m')
     playagain = True if input(YELLOW+'DO YOU WANT TO PLAY AGAIN(y/n)?'+WHITE).lower() == 'y' else False
     #saveBoard(board)
     if playagain:
         mainFucntion()
     return 0
+def ai2Turn(board,depth):
+    aiMove  = MiniMaxAlphaBeta(board, depth, HUMAN_PLAYER)
+    board = makeMove(board, aiMove, HUMAN_PLAYER)[0]
+    aiFourInRow2  = findFours(board)
 
+    return  board, aiFourInRow2
+
+def ai2Wins(board):
+    printBoard(board)
+    print('                     '+RED+"AI 2 WINS !!!!\n" +'\033[1;37;40m')
+    playagain = True if input(YELLOW+'DO YOU WANT TO PLAY AGAIN(y/n)?'+WHITE).lower() == 'y' else False
+    #saveBoard(board)
+    if playagain:
+        mainFucntion()
+    return 0
 
 def getDepth():
     depth = input(YELLOW + 'ENTER DIFFICULTY(1-5): ' + WHITE)
@@ -100,9 +86,9 @@ def mainFucntion():
 
         if whomStart:
 
-            board, playerFourInRow = playerTurn(board)
-            if playerFourInRow:
-                whileCondition = playerWins(board)
+            board, aiFourInRow2 = ai2Turn(board,depth)
+            if aiFourInRow2:
+                whileCondition = ai2Wins(board)
                 if whileCondition ==0:
                     break
 
@@ -123,13 +109,12 @@ def mainFucntion():
             printBoard(board)
             
             #Human
-            board, playerFourInRow = playerTurn(board)
-            if playerFourInRow:
-                whileCondition = playerWins(board)
+            board, aiFourInRow2 = ai2Turn(board,depth)
+            if aiFourInRow2:
+                whileCondition = ai2Wins(board)
 
                 if whileCondition ==0:
                     break
-
             printBoard(board)
 
 mainFucntion()
