@@ -1,4 +1,5 @@
 from minimaxAlphaBeta import *
+from minimax import *
 
 RED     = '\033[1;31;40m'
 YELLOW  = '\033[1;33;40m'
@@ -34,7 +35,7 @@ def aiWins(board):
         mainFucntion()
     return 0
 def ai2Turn(board,depth):
-    aiMove  = MiniMaxAlphaBeta(board, depth, HUMAN_PLAYER)
+    aiMove  = MiniMax(board, depth, HUMAN_PLAYER)
     board = makeMove(board, aiMove, HUMAN_PLAYER)[0]
     aiFourInRow2  = findFours(board)
 
