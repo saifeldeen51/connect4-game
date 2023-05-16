@@ -1,7 +1,7 @@
 BOARD_WIDTH  = 7
 BOARD_HEIGHT = 6 
-AI_PLAYER    = 'o'
-HUMAN_PLAYER = 'x'
+O_PLAYER    = 'o'
+X_PLAYER = 'x'
 
 def countSequence(board, player, length):
     """ Given the board state , the current player and the length of Sequence you want to count
@@ -92,8 +92,8 @@ def utilityValue(board, player):
         The score of any player is the sum of each sequence found for this player scalled by large factor for
         sequences with higher lengths.
     """
-    if player == HUMAN_PLAYER: opponent = AI_PLAYER
-    else: opponent = HUMAN_PLAYER
+    if player == X_PLAYER: opponent = O_PLAYER
+    else: opponent = X_PLAYER
 
     playerfours    = countSequence(board, player, 4)
     playerthrees   = countSequence(board, player, 3)
@@ -117,9 +117,9 @@ def utilityValue(board, player):
 def gameIsOver(board):
     """Check if there is a winner in the current state of the board
     """
-    if countSequence(board, HUMAN_PLAYER, 4) >= 1:
+    if countSequence(board, X_PLAYER, 4) >= 1:
         return True
-    elif countSequence(board, AI_PLAYER, 4) >= 1:
+    elif countSequence(board, O_PLAYER, 4) >= 1:
         return True
     else:
         return False

@@ -27,32 +27,33 @@ def loadBoard():
 
 
 
-def aiTurn(board,depth):
-    aiMove  = MiniMaxAlphaBeta(board, depth, AI_PLAYER)
-    board = makeMove(board, aiMove, AI_PLAYER)[0]
-    aiFourInRow  = findFours(board)
+def aiMinimaxTurn(board,depth):
+    aiMove  = MiniMax(board, depth, O_PLAYER)
+    board = makeMove(board, aiMove, O_PLAYER)[0]
+    aiMinFourInRow  = findFours(board)
 
-    return  board, aiFourInRow
+    return  board, aiMinFourInRow
 
-def aiWins(board):
+def aiMininmaxWins(board):
     printBoard(board)
-    print('                     '+RED+"AI 1 WINS !!!!\n" +'\033[1;37;40m')
+    print('                     '+RED+"AI agent with Minimax WINS !!!!\n" +'\033[1;37;40m')
     playagain = True if input(YELLOW+'DO YOU WANT TO PLAY AGAIN(y/n)?'+WHITE).lower() == 'y' else False
     #saveBoard(board)
     if playagain:
         mainFucntion()
     return 0
-def ai2Turn(board,depth):
-    aiMove  = MiniMax(board, depth, HUMAN_PLAYER)
-    board = makeMove(board, aiMove, HUMAN_PLAYER)[0]
-    aiFourInRow2  = findFours(board)
 
-    return  board, aiFourInRow2
+def aiAlphaTurn(board,depth):
+    aiMove  = MiniMaxAlphaBeta(board, depth, X_PLAYER)
+    board = makeMove(board, aiMove, X_PLAYER)[0]
+    aiAlphaFourInRow  = findFours(board)
 
-def ai2Wins(board):
+    return  board, aiAlphaFourInRow
+
+def aiAlphaWins(board):
     printBoard(board)
-    print('                     '+RED+"AI 2 WINS !!!!\n" +'\033[1;37;40m')
-    playagain = True if input(YELLOW+'DO YOU WANT TO PLAY AGAIN(y/n)?'+WHITE).lower() == 'y' else False
+    print('                     '+RED+"AI agent With Alpha-beta pruning WINS !!!!\n" +'\033[1;37;40m')
+    playagain = True if input(YELLOW+'DO YOU WANT TO RESTART THE GAME(y/n)?'+WHITE).lower() == 'y' else False
     #saveBoard(board)
     if playagain:
         mainFucntion()
@@ -84,7 +85,7 @@ def mainFucntion():
     if loadFlag == True:
         whomStart = True
     else:
-        whomStart = True if input(YELLOW + 'DO YOU WANT TO START(y/n)? ' + WHITE).lower() == 'y' else False
+        whomStart = True if input(YELLOW + 'DO YOU WANT THE AI AGENT WITH MINIMAX TO START(y/n)? ' + WHITE).lower() == 'y' else False
     if board == None:
         board = initializeBoard()
 
@@ -94,59 +95,57 @@ def mainFucntion():
             break
 
         if whomStart:
-
-            board, aiFourInRow2 = ai2Turn(board,depth)
+            board, aiMinFourInRow = aiMinimaxTurn(board,depth)
             running_time_minimax = time.time() - init_time_minimax
             minimax_time.append(running_time_minimax)
             print("             Minimax running time: %.4f seconds" % running_time_minimax)
 
-            if aiFourInRow2:
-                whileCondition = ai2Wins(board)
+            if aiMinFourInRow:
+                whileCondition = aiMininmaxWins(board)
                 if whileCondition ==0:
                     break
 
-            #AI
-            board, aiFourInRow = aiTurn(board,depth)
+            #AI with Alpha-beta algorithm 
+            board, aiAlphaFourInRow = aiAlphaTurn(board,depth)
             running_time_alpha = time.time() - init_time_alpha
             alpha_time.append(running_time_alpha)
             print("             Alpha-Beta running time: %.4f seconds" % running_time_alpha)            
-            if aiFourInRow:
-                whileCondition = aiWins(board)
+            if aiAlphaFourInRow:
+                whileCondition = aiAlphaWins(board)
                 if whileCondition ==0:
                     break
             printBoard(board)
         else:
-            #AI
-            board, aiFourInRow = aiTurn(board,depth)
+            #AI with Alpha-beta algorithm
+            board, aiAlphaFourInRow = aiAlphaTurn(board,depth)
             running_time_alpha = time.time() - init_time_alpha
             alpha_time.append(running_time_alpha)   
             print("             Alpha-Beta running time: %.4f seconds" % running_time_alpha)
                      
-            if aiFourInRow:
-                whileCondition = aiWins(board)
+            if aiAlphaFourInRow:
+                whileCondition = aiAlphaWins(board)
                 if whileCondition ==0:
                     break
             printBoard(board)
             
-            #Human
-            
-            board, aiFourInRow2 = ai2Turn(board,depth)
+            #AI with mimimax algorithm
+            board, aiMinFourInRow = aiMinimaxTurn(board,depth)
             running_time_minimax = time.time() - init_time_minimax
             minimax_time.append(running_time_minimax)
             print("             Minimax running time: %.4f seconds" % running_time_minimax)
 
-            if aiFourInRow2:
-                whileCondition = ai2Wins(board)
+            if aiMinFourInRow:
+                whileCondition = aiMininmaxWins(board)
 
                 if whileCondition ==0:
                     break
             printBoard(board)
-        plt.title("Speed Performance For Two Algorithms")
-        plt.ylabel("Time")
-        plt.xlabel("Round")
-        plt.plot(minimax_time, color = "red", label = "Minimax")
-        plt.plot(alpha_time, color = "blue", label = "Alpha-Beta")
-        plt.legend()
-        plt.show()    
+    plt.title("Speed Performance For Two Algorithms")
+    plt.ylabel("Time")
+    plt.xlabel("Round")
+    plt.plot(minimax_time, color = "red", label = "Minimax")
+    plt.plot(alpha_time, color = "blue", label = "Alpha-Beta")
+    plt.legend()
+    plt.show()    
     
 mainFucntion()

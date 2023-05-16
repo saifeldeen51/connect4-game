@@ -8,10 +8,10 @@ def MiniMax(board, depth, player):
     bestMove = validMoves[0]
     bestScore = float("-inf")
 
-    if player == AI_PLAYER:
-        opponent = HUMAN_PLAYER
+    if player == O_PLAYER:
+        opponent = X_PLAYER
     else:
-        opponent = AI_PLAYER
+        opponent = O_PLAYER
 
     for move in validMoves:
         tempBoard = makeMove(board, move, player)[0]
