@@ -12,8 +12,8 @@ def MiniMaxAlphaBeta(board, depth, player):
     alpha = float("-inf")
     beta = float("inf")
 
-    if player == AI_PLAYER: opponent = HUMAN_PLAYER
-    else: opponent = AI_PLAYER
+    if player == O_PLAYER: opponent = X_PLAYER
+    else: opponent = O_PLAYER
   
     # go through all of those boards
     for move in validMoves:
