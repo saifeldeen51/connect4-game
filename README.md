@@ -33,9 +33,9 @@ To improve the efficiency of the algorithm, alpha-beta pruning is used to prune 
 
 This game was created by :
 
--[Saif Eldeen Mohamed](https://github.com/saifeldeen51) 
--[Amira Ahmed Ebrahim]()
--[Lamiaa Wael Mohammed](https://github.com/lamiaa21)
--[Haneen Hossam Kamal](https://github.com/Haneen7502)
+- [Saif Eldeen Mohamed](https://github.com/saifeldeen51) 
+- [Amira Ahmed Ebrahim](https://github.com/Amira271)
+- [Lamiaa Wael Mohammed](https://github.com/lamiaa21)
+- [Haneen Hossam Kamal](https://github.com/Haneen7502)
 
 If you have any questions or suggestions, please feel free to contact us.
