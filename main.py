@@ -1,5 +1,6 @@
 from minimaxAlphaBeta import *
 from minimax import *
+import time
 
 RED     = '\033[1;31;40m'
 YELLOW  = '\033[1;33;40m'
@@ -11,6 +12,10 @@ WHITE   = '\033[1;37;40m'
 dir_path = os.getcwd()
 os.chdir(dir_path)
 
+running_time_minimax = 0
+running_time_alpha = 0
+minimax_time = []
+alpha_time = []
 
 def loadBoard():
 
@@ -87,14 +92,25 @@ def mainFucntion():
 
         if whomStart:
 
+            init_time_minimax = time.time()
+
             board, aiFourInRow2 = ai2Turn(board,depth)
+            running_time_minimax = time.time() - init_time_minimax
+            minimax_time.append(running_time_minimax)
+            print("             Minimax running time: %.4f seconds" % running_time_minimax)
+
             if aiFourInRow2:
                 whileCondition = ai2Wins(board)
                 if whileCondition ==0:
                     break
 
             #AI
+            init_time_alpha = time.time()
+
             board, aiFourInRow = aiTurn(board,depth)
+            running_time_alpha = time.time() - init_time_alpha
+            alpha_time.append(running_time_alpha)
+            print("             Alpha-Beta running time: %.4f seconds" % running_time_alpha)            
             if aiFourInRow:
                 whileCondition = aiWins(board)
                 if whileCondition ==0:
@@ -102,7 +118,13 @@ def mainFucntion():
             printBoard(board)
         else:
             #AI
+            init_time_alpha = time.time()
+
             board, aiFourInRow = aiTurn(board,depth)
+            running_time_alpha = time.time() - init_time_alpha
+            alpha_time.append(running_time_alpha)   
+            print("             Alpha-Beta running time: %.4f seconds" % running_time_alpha)
+                     
             if aiFourInRow:
                 whileCondition = aiWins(board)
                 if whileCondition ==0:
@@ -110,12 +132,17 @@ def mainFucntion():
             printBoard(board)
             
             #Human
+            init_time_minimax = time.time()
             board, aiFourInRow2 = ai2Turn(board,depth)
+            running_time_minimax = time.time() - init_time_minimax
+            minimax_time.append(running_time_minimax)
+            print("             Minimax running time: %.4f seconds" % running_time_minimax)
+
             if aiFourInRow2:
                 whileCondition = ai2Wins(board)
 
                 if whileCondition ==0:
                     break
             printBoard(board)
-
+    
 mainFucntion()
