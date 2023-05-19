@@ -154,7 +154,7 @@ def mainFucntion():
     print("minimum time of Alpha-Beta algorithm ---> ",min(alpha_time),"sec") 
     print()                 
     plt.title("Speed Performance For Two Algorithms")
-    plt.ylabel("Time")
+    plt.ylabel("Time (seconds)")
     plt.xlabel("Round")
     plt.plot(minimax_time, color = "red", label = "Minimax")
     plt.plot(alpha_time, color = "blue", label = "Alpha-Beta")
