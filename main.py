@@ -13,8 +13,8 @@ WHITE   = '\033[1;37;40m'
 
 dir_path = os.getcwd()
 os.chdir(dir_path)
-init_time_minimax = time.time()
-init_time_alpha = time.time()
+# init_time_minimax = time.time()
+# init_time_alpha = time.time()
 running_time_minimax = 0
 running_time_alpha = 0
 minimax_time = []
@@ -23,9 +23,6 @@ alpha_time = []
 def loadBoard():
 
     return None, False
-
-
-
 
 def aiMinimaxTurn(board,depth):
     aiMove  = MiniMax(board, depth, O_PLAYER)
@@ -90,11 +87,15 @@ def mainFucntion():
         board = initializeBoard()
 
     while(whileCondition):
+        # init_time_minimax = time.time()
+        # init_time_alpha = time.time()
         if isBoardFilled(board) :
             print("GAME OVER\n")
             break
 
         if whomStart:
+            #AI with mimimax algorithm
+            init_time_minimax = time.time()
             board, aiMinFourInRow = aiMinimaxTurn(board,depth)
             running_time_minimax = time.time() - init_time_minimax
             minimax_time.append(running_time_minimax)
@@ -105,7 +106,8 @@ def mainFucntion():
                 if whileCondition ==0:
                     break
 
-            #AI with Alpha-beta algorithm 
+            #AI with Alpha-beta algorithm
+            init_time_alpha = time.time() 
             board, aiAlphaFourInRow = aiAlphaTurn(board,depth)
             running_time_alpha = time.time() - init_time_alpha
             alpha_time.append(running_time_alpha)
@@ -117,6 +119,7 @@ def mainFucntion():
             printBoard(board)
         else:
             #AI with Alpha-beta algorithm
+            init_time_alpha = time.time()
             board, aiAlphaFourInRow = aiAlphaTurn(board,depth)
             running_time_alpha = time.time() - init_time_alpha
             alpha_time.append(running_time_alpha)   
@@ -129,6 +132,7 @@ def mainFucntion():
             printBoard(board)
             
             #AI with mimimax algorithm
+            init_time_minimax = time.time()
             board, aiMinFourInRow = aiMinimaxTurn(board,depth)
             running_time_minimax = time.time() - init_time_minimax
             minimax_time.append(running_time_minimax)
@@ -140,6 +144,15 @@ def mainFucntion():
                 if whileCondition ==0:
                     break
             printBoard(board)
+    print()        
+    print("maximum time of Minimax algorithm ---> ",max(minimax_time),"sec")
+    print("minimun time of Minimax algorithm ---> ",min(minimax_time),"sec") 
+    print()
+    print("-------------------------------------------------------------------------------") 
+    print()
+    print("maximum time of Alpha-Beta algorithm ---> ",max(alpha_time),"sec")  
+    print("minimum time of Alpha-Beta algorithm ---> ",min(alpha_time),"sec") 
+    print()                 
     plt.title("Speed Performance For Two Algorithms")
     plt.ylabel("Time")
     plt.xlabel("Round")
