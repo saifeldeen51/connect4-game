@@ -222,7 +222,7 @@ def getEmptyLocations(board):
 
 def printBoard(Board):
     #clear console/terminal screen
-    os.system('cls' if os.name == 'nt' else 'clear')
+    # os.system('cls' if os.name == 'nt' else 'clear')
     emptyLocations = 42 - getEmptyLocations(Board) #get empty locations
     print('')
     print(YELLOW + '         ROUND #' + str(emptyLocations) + WHITE, end=" ")   #print round number
